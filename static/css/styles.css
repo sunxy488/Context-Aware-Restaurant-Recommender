@@ -1,0 +1,606 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 15px;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    max-width: 370px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.toggle-container {
+    display: flex;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 8px 10px;
+    background: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-btn:hover {
+    background: #e0e0e0;
+}
+
+.toggle-btn.active {
+    background: #4285f4;
+    color: white;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#query {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.select-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#restaurant-select {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+#btn-go,
+#btn-recommend {
+    background: #4285f4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#btn-go:hover,
+#btn-recommend:hover {
+    background: #3367d6;
+}
+
+.keywords-container {
+    margin-top: 10px;
+    font-size: 0.9em;
+    padding: 5px 0;
+}
+
+.keyword-tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 3px 8px;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.result-container {
+    margin-top: 15px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.restaurant-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.restaurant-item:hover {
+    background-color: #f8f9fa;
+}
+
+.restaurant-name {
+    font-weight: bold;
+}
+
+.restaurant-info {
+    font-size: 0.85em;
+    color: #555;
+}
+
+.loading {
+    text-align: center;
+    padding: 10px;
+    color: #666;
+}
+
+.leaflet-control-container {
+    display: none !important;
+}
+
+.leaflet-marker-icon {
+    opacity: 0.8;
+}
+
+.leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-popup-tip {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.popup-content {
+    padding: 5px;
+    font-size: 12px;
+}
+
+/* AI chat button */
+.chat-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #4285f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.chat-button:hover {
+    transform: scale(1.1);
+    background: #3367d6;
+}
+
+.chat-icon {
+    color: white;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.chat-icon i {
+    position: relative;
+    z-index: 2;
+}
+
+.chat-icon::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    width: 30px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 450px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chat-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.chat-header {
+    padding: 15px;
+    background: #4285f4;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.chat-close {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message.bot {
+    align-items: flex-start;
+}
+
+.message-content {
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user .message-content {
+    background: #4285f4;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.bot .message-content {
+    background: white;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+#chat-send {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+#chat-send:hover {
+    background: #3367d6;
+}
+
+.chat-typing {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.typing-indicator {
+    padding: 10px 15px;
+    background: white;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #aaa;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: typing 1.5s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes typing {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-5px);
+    }
+}
+
+/* scene classification panel */
+#category-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 15px;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    width: 220px;
+}
+
+#category-panel h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.category-checkboxes {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.category-label input {
+    margin-right: 8px;
+}
+
+/* map legend */
+#map-legend {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    width: 150px;
+    display: none;
+}
+
+#map-legend h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.legend-marker {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.legend-recommendation {
+    background-color: #F44336;
+}
+
+.legend-dating {
+    background-color: #E91E63;
+}
+
+.legend-family {
+    background-color: #4CAF50;
+}
+
+.legend-friend {
+    background-color: #2196F3;
+}
+
+.legend-professional {
+    background-color: #FF9800;
+}
+
+/* dot marker */
+.category-circle {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    opacity: 0.7;
+}
+
+/* Traffic control styling */
+#traffic-toggle {
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+}
+
+#traffic-toggle.active {
+    background-color: #2196F3;
+    color: white;
+}
+
+.traffic-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.traffic-btn:hover {
+    background-color: #45a049;
+}
+
+.traffic-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.traffic-popup h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.traffic-popup p {
+    margin: 4px 0;
+    font-size: 12px;
+}
+
+/* Traffic legend */
+.traffic-legend {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    z-index: 1000;
+    background: white;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+    max-width: 200px;
+    display: none;
+}
+
+.traffic-legend.visible {
+    display: block;
+}
+
+.traffic-legend h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.traffic-legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.traffic-legend-color {
+    width: 20px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+.traffic-fluent {
+    background-color: #4CAF50;
+}
+
+.traffic-light {
+    background-color: #FFC107;
+}
+
+.traffic-moderate {
+    background-color: #FF9800;
+}
+
+.traffic-heavy {
+    background-color: #F44336;
+}
+
+/* Traffic button (added next to chat button) */
+.traffic-button {
+    position: fixed;
+    bottom: 30px;
+    right: 110px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #FF9800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.traffic-button:hover {
+    transform: scale(1.1);
+    background: #F57C00;
+}
+
+.traffic-button.active {
+    background: #4CAF50;
+}
+
+.traffic-icon {
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}

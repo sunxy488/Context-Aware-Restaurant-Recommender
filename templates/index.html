@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet.Locate -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js"
+        charset="utf-8"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+
+    <title>Restaurant Recommendation System</title>
+</head>
+
+<body>
+    <!-- controls -->
+    <div id="controls">
+        <h3>Restaurant Recommendations</h3>
+
+        <!-- recommend by name -->
+        <div id="restaurant-section">
+            <div class="select-container">
+                <select id="restaurant-select">
+                    <option value="">-- Select Restaurant --</option>
+                </select>
+                <button id="btn-recommend">Recommend</button>
+            </div>
+        </div>
+
+        <!-- result -->
+        <div id="result-list" class="result-container"></div>
+    </div>
+
+    <!-- category control panel -->
+    <div id="category-panel">
+        <h4>Discover restaurant by type</h4>
+        <div class="category-checkboxes">
+            <label class="category-label">
+                <input type="checkbox" name="category" value="dating" id="dating-checkbox">
+                Romantic
+            </label>
+            <label class="category-label">
+                <input type="checkbox" name="category" value="family" id="family-checkbox">
+                Family
+            </label>
+            <label class="category-label">
+                <input type="checkbox" name="category" value="friend" id="friend-checkbox">
+                Friendship
+            </label>
+            <label class="category-label">
+                <input type="checkbox" name="category" value="professional" id="professional-checkbox">
+                Professional
+            </label>
+        </div>
+    </div>
+
+    <!-- map legend -->
+    <div id="map-legend">
+        <h4>Legend</h4>
+        <div class="legend-item dating-item">
+            <span class="legend-marker legend-dating"></span>
+            <span>Romantic</span>
+        </div>
+        <div class="legend-item family-item">
+            <span class="legend-marker legend-family"></span>
+            <span>Family</span>
+        </div>
+        <div class="legend-item friend-item">
+            <span class="legend-marker legend-friend"></span>
+            <span>Friendship</span>
+        </div>
+        <div class="legend-item professional-item">
+            <span class="legend-marker legend-professional"></span>
+            <span>Professional</span>
+        </div>
+    </div>
+
+    <!-- map container -->
+    <div id="map"></div>
+
+    <!-- Traffic toggle button -->
+    <div id="traffic-toggle-btn" class="traffic-button">
+        <div class="traffic-icon">
+            <i class="fas fa-car"></i>
+        </div>
+    </div>
+
+    <!-- AI assistant button -->
+    <div id="chat-button" class="chat-button">
+        <div class="chat-icon">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+    </div>
+
+    <!-- AI assistant chat box -->
+    <div id="chat-container" class="chat-container hidden">
+        <div class="chat-header">
+            <div class="chat-title">AI Recommendation Assistant</div>
+            <div class="chat-close"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="chat-messages">
+            <div class="message bot">
+                <div class="message-content">Hello, I'm your restaurant recommendation assistant. How can I help you?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your question..." />
+            <button id="chat-send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
