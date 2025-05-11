@@ -1,4 +1,4 @@
-# 🍽️ Restaurant Recommendation Agent
+# 🍽️ Yelp Restaurant Recommendation Agent
 
 A sophisticated web application designed to provide personalized restaurant recommendations. This system intelligently extracts keywords from user queries and leverages real-time environmental data to offer relevant and timely suggestions. It supports both query-based and restaurant-name-based recommendation modes, enhanced by an AI chatbot for natural language interaction.
 
