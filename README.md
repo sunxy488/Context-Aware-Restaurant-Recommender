@@ -47,6 +47,11 @@ restaurant-recommender/
 │   ├─ results.xlsx             # Restaurant information
 │   ├─ yelp_reviews.xlsx        # Restaurant reviews
 │   └─ labeled.xlsx             # Social context labeled data
+├─ images/              # Project images and screenshots
+│   ├─ app.jpg                 # Application interface screenshot
+│   ├─ ClassificationReport.jpg # Classification report screenshot
+│   ├─ SBERT.jpg       # SBERT method result screenshot 
+│   └─ TF-IDF.jpg       # TF-IDF method result screenshot
 ├─ templates/
 │   └─ index.html        # Main page template
 └─ static/
@@ -191,3 +196,22 @@ python test-zeroshot-result.py
   - HERE Routing API v8: For real-time traffic information
   - Mapbox Maps API: For map visualization and traffic data layer
   - Google Gemini API: For natural language interaction 
+
+## Python Files Description
+
+### Core Application Files
+- `app.py`: Main entry point of the Flask application, handling all web requests and routing
+- ![Application Interface](/images/app.jpg)
+- `recommender.py`: Core recommendation functionality implementation, including TF-IDF and SBERT based recommendation algorithms
+- `extract_keywords.py`: Keyword extraction functionality using NLP techniques from user queries
+- `restaurant_type.py`: Implementation of restaurant social context classification for determining suitable occasions
+
+### Model Training Files
+- `Restaurant_Recommend_TF-IDF.py`: Training script for TF-IDF based recommendation model
+- `Restaurant_Recommend_SBert.py`: Training script for Sentence-BERT based recommendation model
+- `zeroshot-classify.py`: Implementation of zero-shot classification for restaurant context categorization
+- `test-zeroshot-result.py`: Testing script for evaluating zero-shot classification model 
+
+### Data Processing Files
+- `get_reviews.py`: Script for retrieving and processing restaurant review data
+- `test-rs.py`: Testing script for the recommendation system to validate recommendation results
